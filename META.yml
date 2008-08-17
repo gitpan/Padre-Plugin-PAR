@@ -1,6 +1,6 @@
 ---
 name: Padre-Plugin-PAR
-version: 0.01
+version: 0.02
 author:
   - Gabor Szabo
 abstract: PAR generation from Padre
@@ -12,14 +12,14 @@ requires:
   Cwd: 0
   Data::Dumper: 0
   PAR::Packer: 0
-  Padre: 0.0302
-  perl: 5.006
+  Padre: 0.05
+  perl: 5.008
 build_requires:
   Test::More: 0.47
 provides:
   Padre::Plugin::PAR:
     file: lib/Padre/Plugin/PAR.pm
-    version: 0.01
+    version: 0.02
 generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

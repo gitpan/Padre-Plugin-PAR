@@ -5,7 +5,7 @@ use warnings;
 use Wx        qw(:everything);
 use Wx::Event qw(:everything);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 NAME
 
@@ -39,9 +39,7 @@ sub on_stand_alone {
     #print "Stand alone called\n";
     # get name of the current file, if it is a pl file create the corresponding .exe
 
-    my $nb = $self->get_nb;
-    my $id   = $nb->GetSelection;
-    my $filename = $self->_get_filename($id);
+    my $filename = $self->get_current_filename;
     if (not $filename) {
         Wx::MessageBox( "No filename, cannot run", "Cannot create", wxOK|wxCENTRE, $self );
         return;
