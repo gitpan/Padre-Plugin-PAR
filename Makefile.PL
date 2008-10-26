@@ -9,7 +9,7 @@ WriteMakefile
                            'Cwd' => '0',
                            'Data::Dumper' => '0',
                            'PAR::Packer' => '0',
-                           'Padre' => '0.05',
+                           'Padre' => '0.12',
                            'Test::More' => '0.47'
                          },
           'INSTALLDIRS' => 'site',

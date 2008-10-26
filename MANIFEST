@@ -1,12 +1,8 @@
 Build.PL
 Changes
+lib/Padre/Plugin/PAR.pm
 MANIFEST			This list of files
 README
-
-
-lib/Padre/Plugin/PAR.pm
-
-
 t/01-load.t
 Makefile.PL
 META.yml
