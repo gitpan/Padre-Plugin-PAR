@@ -1,3 +1,9 @@
+0.04 2008-11-12
+
+  - Follow the API changes of Padre 0.16
+  - Use Padre::Wx instead of Wx.
+  - Use Padre::PluginBuilder instead of Module::Build.
+
 0.03 2008-10-26
 
   - Follow the API changes of Padre 0.12_01
