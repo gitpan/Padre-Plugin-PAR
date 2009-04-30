@@ -1,11 +1,15 @@
 package Padre::Plugin::PAR;
 use strict;
 use warnings;
+use base 'Padre::Plugin';
 
-use Padre::Wx  ();
-use File::Temp ();
+our $VERSION = '0.05';
 
-our $VERSION = '0.04';
+use Padre::Wx;
+
+sub require_modules {
+    require File::Temp;
+}
 
 =head1 NAME
 
@@ -14,7 +18,7 @@ Padre::Plugin::PAR - PAR generation from Padre
 =head1 SYNOPIS
 
 This is an experimental version of the plugin using the experimental
-plugin interface of Padre 0.16.
+plugin interface of Padre 0.24.
 
 After installation there should be a menu item I<Padre - PAR - Stand Alone>
 
@@ -26,24 +30,46 @@ file for you.
 
 =cut
 
+sub padre_interfaces {
+  'Padre::Plugin'         => 0.19,
+  'Padre::Current'        => 0.24,
+}
 
-my @menu = (
-    ["Stand alone", \&on_stand_alone],
-);
+sub menu_plugins_simple {
+    my $self = shift;
+    return 'PAR' => [
+        'Create Standalone Exe' => \&on_stand_alone,
+        'About' => sub { $self->about },
+    ];
+}
 
-sub menu {
-    my ($self) = @_;
-    return @menu;
+sub about {
+    my $self = shift;
+
+    # Generate the About dialog
+    my $about = Wx::AboutDialogInfo->new;
+    $about->SetName("PAR Plugin");
+    $about->SetDescription( <<"END_MESSAGE" );
+This is an experimental plugin for Padre to allow
+you to generate standalone executables from your Perl
+programs using PAR, the Perl ARchive Toolkit.
+END_MESSAGE
+
+    # Show the About dialog
+    Wx::AboutBox( $about );
+
+    return;
 }
 
 sub on_stand_alone {
-    my ($self, $event) = @_;
-print "$event\n";
-return;
+    my ($mw, $event) = @_;
+
+    require_modules();
+
     #print "Stand alone called\n";
     # get name of the current file, if it is a pl file create the corresponding .exe
 
-    my $doc = $self->selected_document;
+    my $doc = $mw->current->document;
 
     my $filename = $doc->filename;
     my $tmpfh;
@@ -56,15 +82,15 @@ return;
     }
 
     if ($filename !~ /\.pl$/i) {
-        Wx::MessageBox( "Currently we only support exe generation from .pl files", "Cannot create", Wx::wxOK|Wx::wxCENTRE, $self );
+        Wx::MessageBox( "Currently we only support exe generation from .pl files", "Cannot create", Wx::wxOK|Wx::wxCENTRE, $mw );
         return;
     }
     (my $out = $filename) =~ s/pl$/exe/i;
     my $ret = system("pp", $filename, "-o", $out);
     if ($ret) {
-       Wx::MessageBox( "Error generating '$out': $!", "Failed", Wx::wxOK|Wx::wxCENTRE, $self );
+       Wx::MessageBox( "Error generating '$out': $!", "Failed", Wx::wxOK|Wx::wxCENTRE, $mw );
     } else {
-       Wx::MessageBox( "$out generated", "Done", Wx::wxOK|Wx::wxCENTRE, $self );
+       Wx::MessageBox( "$out generated", "Done", Wx::wxOK|Wx::wxCENTRE, $mw );
     }
 
     if ($tmpfh) {

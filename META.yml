@@ -1,27 +1,29 @@
 ---
 name: Padre-Plugin-PAR
-version: 0.04
+version: 0.05
 author:
   - Gabor Szabo
   - Steffen Mueller
 abstract: PAR generation from Padre
 license: perl
 resources:
-  license: http://dev.perl.org/licenses/
+  license: ~
+configure_requires:
+  Padre::PluginBuilder: 0.12
 requires:
   Carp: 0
   Cwd: 0
   Data::Dumper: 0
   PAR::Packer: 0
-  Padre: 0.12
+  Padre: 0.24
   perl: 5.008
 build_requires:
   Test::More: 0.47
 provides:
   Padre::Plugin::PAR:
     file: lib/Padre/Plugin/PAR.pm
-    version: 0.04
-generated_by: Module::Build version 0.2808
+    version: 0.05
+generated_by: Module::Build version 0.31012
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2
